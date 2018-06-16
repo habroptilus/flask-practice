@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>{{ result }}</p>
+
+<!-- testメソッドのrequest.form['single']に届きます -->
+<form class="" action="/test" method="post">
+  <input type="text" name="hoge" placeholder="入力してください">
+  <input type="submit" name="" value="テキストで送信">
+</form>
+
+{% endblock %}
