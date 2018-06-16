@@ -2,10 +2,19 @@
 {% block content %}
 <p>{{ result }}</p>
 
-<!-- testメソッドのrequest.form['single']に届きます -->
+{% for v in checked_list %}
+<li>{{ v }}</li>
+{% endfor %}
+
 <form class="" action="/test" method="post">
   <input type="text" name="hoge" placeholder="入力してください">
-  <input type="submit" name="" value="テキストで送信">
+  <input type="checkbox" name="list" value="かきくけこ" >かきくけこ
+  <input type="checkbox" name="list" value="さしすせそ" >さしすせそ
+  <input type="checkbox" name="list" value="もん" >もち
+  <input type="submit" name="" value="送信">
 </form>
+
+
+
 
 {% endblock %}

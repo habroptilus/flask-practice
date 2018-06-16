@@ -12,10 +12,12 @@ def test():
     if request.method == 'POST':
         # postできた場合。テキストエリア"hoge"の値を埋め込んでレンダリング
         val = request.form['hoge']
+        checked = request.form.getlist("list")
     else:
         # getできた場合。クエリパラメータをこれで受け取れる。なかったら第二引数のを用いる
         val = request.args.get("msg", "Not defined")
-    return render_template('test.html', result=val)
+        checked = []
+    return render_template('test.html', result=val, checked_list=checked)
 
 
 if __name__ == "__main__":
