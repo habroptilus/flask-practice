@@ -2,4 +2,5 @@
 {% block content %}
     <p>ID:{{ target_user.id }}</p>
     <p>Name:{{ target_user.username }}</p>
+    <a href={{"edit/{}".format(target_user.id)}}>変更する</a>
 {% endblock %}

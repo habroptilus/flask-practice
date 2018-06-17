@@ -40,5 +40,16 @@ def add_user():
 @app.route("/user/<user_id>")
 def show_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
-
     return render_template("show_user.html", target_user=target_user)
+
+
+@app.route("/user/edit/<user_id>", methods=['GET', 'POST'])
+def edit_user(user_id):
+    target_user = User.query.get(user_id)  # primary keyでなら検索できる
+    if request.method == 'GET':
+        return render_template("edit_user.html", target_user=target_user)
+    elif request.method == 'POST':
+        username = request.form.get('username')
+        target_user.username = username
+        db.session.commit()
+        return redirect(url_for("index"))
