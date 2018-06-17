@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
     <p>{{ result }}</p>
+    <form class="" action="{{ url_for('add_user') }}" method="post">
+        <label for="username">Name:</label>
+        <input type="text" size="30" name="username">
+        <input type="submit">
+    </form>
 {% endblock %}
