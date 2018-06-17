@@ -4,10 +4,10 @@
     <p>{{ message }}</p>
     <a href="/test?msg=moti">test</a>
     <a href="/hoge/3">hoge</a>
-    
+
     <ul class="users">
         {% for user in user_list %}
-            <li>{{ user.username }}</li>
+            <li><a href={{"/user/{}".format(user.id)}}>{{ user.username }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
