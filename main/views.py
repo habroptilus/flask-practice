@@ -43,6 +43,14 @@ def show_user(user_id):
     return render_template("show_user.html", target_user=target_user)
 
 
+@app.route("/user/delete/<user_id>", methods=["POST"])
+def del_user(user_id):
+    target_user = User.query.get(user_id)  # primary keyでなら検索できる
+    db.session.delete(target_user)
+    db.session.commit()
+    return redirect(url_for("index"))
+
+
 @app.route("/user/edit/<user_id>", methods=['GET', 'POST'])
 def edit_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
