@@ -6,7 +6,7 @@ terminalでpythonをインタラクティブモードで立ち上げて、以下
 
 ```bash:terminal
 from main.models import init
-init()
+init_db()
 ```
 `main/config.py`に書いてあるDBとテーブルを作成してくれる。
 SQliteを使っている。
