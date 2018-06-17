@@ -9,5 +9,5 @@ class User(db.Model):
         self.username = username
 
 
-def init():
+def init_db():
     db.create_all()
