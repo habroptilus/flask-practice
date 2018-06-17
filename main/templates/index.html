@@ -2,12 +2,17 @@
 {% block content %}
     <h1><img src="/static/kakapo.jpg"></h1>
     <p>{{ message }}</p>
-    <a href="/test?msg=moti">test</a>
-    <a href="/hoge/3">hoge</a>
+    <a href="/test?msg=moti">test_page</a>
 
     <ul class="users">
         {% for user in user_list %}
             <li><a href={{"/user/{}".format(user.id)}}>{{ user.username }}</a></li>
         {% endfor %}
     </ul>
+
+    <form class="" action="{{ url_for('add_user') }}" method="post">
+        <label for="username">Name:</label>
+        <input type="text" size="30" name="username">
+        <input type="submit">
+    </form>
 {% endblock %}

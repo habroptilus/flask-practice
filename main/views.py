@@ -22,11 +22,6 @@ def test():
     return render_template('test.html', result=val, checked_list=checked)
 
 
-@app.route('/hoge/<postid>')
-def hoge(postid):
-    return render_template('hoge.html', result='id = {}'.format(postid))
-
-
 @app.route("/add_user", methods=['POST'])
 def add_user():
     username = request.form.get('username')
