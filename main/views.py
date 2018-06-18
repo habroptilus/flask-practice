@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, flash, session
 from main.models import User
 from main import db, app
 
@@ -62,3 +62,24 @@ def edit_user(user_id):
         target_user.password = password
         db.session.commit()
         return redirect(url_for("index"))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user, authenticated = User.authenticate(db.session.query,
+                                                request.form['email'], request.form['password'])
+        if authenticated:
+            session['user_id'] = user.id
+            flash('You were logged in')
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid email or password')
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You were logged out')
+    return redirect(url_for('login'))
