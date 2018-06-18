@@ -1,9 +1,16 @@
-{% extends "layout.html" %}
-{% block content %}
-  <h2>Login</h2>
-  <form action="{{ url_for('login') }}" method=post>
-    Email:<input type=text name=email>
-    Password:<input type=password name=password>
-    <input type=submit value=Login>
-  </form>
-{% endblock %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>Login</h2>
+        <form action="{{ url_for('login') }}" method=post>
+          Email:<input type=text name=email>
+          Password:<input type=password name=password>
+          <input type=submit value=Login>
+        </form>
+    </body>
+</html>

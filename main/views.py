@@ -3,7 +3,7 @@ from main.models import User
 from main import db, app
 
 
-@app.route("/")
+@app.route("/index")
 def index():
     user_list = User.query.all()
     return render_template('index.html', message="こんにちは", user_list=user_list)
@@ -64,7 +64,7 @@ def edit_user(user_id):
         return redirect(url_for("index"))
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         user, authenticated = User.authenticate(db.session.query,
