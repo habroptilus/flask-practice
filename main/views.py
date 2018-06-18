@@ -25,8 +25,10 @@ def test():
 @app.route("/add_user", methods=['POST'])
 def add_user():
     username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
     if username:
-        user = User(username)
+        user = User(username, email, password)
         db.session.add(user)
         db.session.commit()
     return redirect(url_for('index'))
@@ -53,6 +55,10 @@ def edit_user(user_id):
         return render_template("edit_user.html", target_user=target_user)
     elif request.method == 'POST':
         username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
         target_user.username = username
+        target_user.email = email
+        target_user.password = password
         db.session.commit()
         return redirect(url_for("index"))
