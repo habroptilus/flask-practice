@@ -10,7 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     _password = db.Column('password', db.String(100),
                           nullable=False)  # privateなフィールド
-    posts = db.relationship("Post", backref="user", lazy="dynamic")
+    posts = db.relationship("Post", backref="user",
+                            lazy="dynamic", cascade="delete")
 
     def __init__(self, username, email, password):
         self.username = username
