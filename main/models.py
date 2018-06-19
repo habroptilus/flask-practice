@@ -10,6 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     _password = db.Column('password', db.String(100),
                           nullable=False)  # privateなフィールド
+    posts = db.relationship("Post", backref="user",
+                            lazy="dynamic", cascade="delete")
 
     def __init__(self, username, email, password):
         self.username = username
@@ -44,5 +46,21 @@ class User(db.Model):
             self=self)
 
 
+class Post(db.Model):
+    __tablename__ = "posts"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    title = db.Column(db.String(30), default='', nullable=False)
+    body = db.Column(db.String(100), default='', nullable=False)
+
+    def __init__(self, user_id, title, body):
+        self.user_id = user_id
+        self.body = body
+        self.title = title
+
+
 def init_db():
     db.create_all()
+    user = User("administrator", "admin@example.com", "admin")
+    db.session.add(user)
+    db.session.commit()

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>新規記事作成画面</h3>
+<form class="" action={{"/create_post/{}".format(target_user.id)}} method="post">
+    <label for="title">タイトル</label>
+    <br>
+    <input type="text" size="30" name="title">
+    <br>
+    <label for="body">記事</label>
+    <br>
+    <textarea rows="10" cols="150" name="body"></textarea>
+    <input type="submit" value="投稿する">
+</form>
+{% endblock %}

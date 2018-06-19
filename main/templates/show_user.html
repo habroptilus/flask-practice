@@ -1,14 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
-    <p>ID:{{ target_user.id }}</p>
-    <p>Name:{{ target_user.username }}</p>
-    <p>email:{{ target_user.email }}</p>
-    <p>password:{{ target_user.password }}</p>
-    <a href={{"edit/{}".format(target_user.id)}}>変更する</a>
 
-    <form class="" action={{"/user/delete/{}".format(target_user.id)}} method="post">
-      <input type="submit" name="" value="ユーザーを削除する">
-    </form>
+    <div class="user-info">
+        <div class="user-info-header">ユーザー情報</div>
+        <div class="user-info-body">
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td>{{ target_user.id }}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{ target_user.username }}</td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>{{ target_user.email }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="user-info-footer">
+            <a href={{"edit/{}".format(target_user.id)}}>変更する</a>
+
+            <form class="" action={{"/user/delete/{}".format(target_user.id)}} method="post">
+              <input type="submit" name="" value="ユーザーを削除する">
+            </form>
+        </div>
+
+    </div>
+
+    <a href={{"/create_post/{}".format(target_user.id)}}>記事を投稿する</a>
+    <table class="post-list">
+        <tr>
+            <th>タイトル</th>
+            <th>投稿</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{post.title}}</td>
+            <td>{{post.body[:10]+"..."}}<a href={{"/show_post/{}".format(post.id)}}>[続きを読む]</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
 
 
 {% endblock %}
