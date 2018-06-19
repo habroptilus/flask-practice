@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, redirect, flash, session, g
-from main.models import User
+from main.models import User, Post
 from main import db, app
 from functools import wraps
 
@@ -26,7 +26,8 @@ def load_user():
 @login_required
 def index():
     user_list = User.query.all()
-    return render_template('index.html', message="こんにちは", user_list=user_list)
+    message = "Hello {}!".format(g.user.username)
+    return render_template('index.html', message=message, user_list=user_list)
 
 
 @app.route('/test', methods=['GET', 'POST'])
@@ -58,7 +59,8 @@ def add_user():
 @login_required
 def show_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
-    return render_template("show_user.html", target_user=target_user)
+    posts = db.session.query(Post).filter_by(user_id=user_id)
+    return render_template("show_user.html", target_user=target_user, posts=posts)
 
 
 @app.route("/user/delete/<user_id>", methods=['POST'])
@@ -105,3 +107,21 @@ def logout():
     session.pop('user_id', None)
     flash('You were logged out')
     return redirect(url_for('login'))
+
+# Posts
+
+
+@app.route("/create_post/<user_id>", methods=['GET', 'POST'])
+@login_required
+def add_post(user_id):
+    if request.method == 'POST':
+        body = request.form.get('body')
+        title = request.form.get('title')
+
+        if body and title:
+            post = Post(user_id, title, body)
+            db.session.add(post)
+            db.session.commit()
+            return redirect("/user/{}".format(user_id))
+    target_user = User.query.get(user_id)
+    return render_template("create_post.html", target_user=target_user)

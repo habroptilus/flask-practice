@@ -49,11 +49,13 @@ class Post(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    title = db.Column(db.String(30), default='', nullable=False)
     body = db.Column(db.String(100), default='', nullable=False)
 
-    def __init__(self, user_id, body):
+    def __init__(self, user_id, title, body):
         self.user_id = user_id
         self.body = body
+        self.title = title
 
 
 def init_db():
