@@ -125,3 +125,10 @@ def add_post(user_id):
             return redirect("/user/{}".format(user_id))
     target_user = User.query.get(user_id)
     return render_template("create_post.html", target_user=target_user)
+
+
+@app.route("/show_post/<post_id>")
+@login_required
+def show_post(post_id):
+    post = Post.query.get(post_id)
+    return render_template("show_post.html", post=post)

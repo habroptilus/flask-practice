@@ -31,12 +31,14 @@
 
     <a href={{"/create_post/{}".format(target_user.id)}}>記事を投稿する</a>
     <table class="post-list">
+        <tr>
+            <th>タイトル</th>
+            <th>投稿</th>
+        </tr>
         {% for post in posts %}
         <tr>
-            <div class="post">
-                <div class="title">[{{post.title}}]</div>
-                <div class="body">{{post.body}}</div>
-            </div>
+            <td>{{post.title}}</td>
+            <td>{{post.body[:10]+"..."}}<a href={{"/show_post/{}".format(post.id)}}>[続きを読む]</a></td>
         </tr>
         {% endfor %}
     </table>
