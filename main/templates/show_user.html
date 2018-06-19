@@ -3,7 +3,6 @@
     <p>ID:{{ target_user.id }}</p>
     <p>Name:{{ target_user.username }}</p>
     <p>email:{{ target_user.email }}</p>
-    <p>password:{{ target_user.password }}</p>
     <a href={{"edit/{}".format(target_user.id)}}>変更する</a>
 
     <form class="" action={{"/user/delete/{}".format(target_user.id)}} method="post">
