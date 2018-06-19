@@ -132,3 +132,18 @@ def add_post(user_id):
 def show_post(post_id):
     post = Post.query.get(post_id)
     return render_template("show_post.html", post=post)
+
+
+@app.route("/edit_post/<post_id>", methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+    target_post = Post.query.get(post_id)  # primary keyでなら検索できる
+    if request.method == 'GET':
+        return render_template("edit_post.html", target_post=target_post)
+    elif request.method == 'POST':
+        title = request.form.get('title')
+        body = request.form.get('body')
+        target_post.title = title
+        target_post.body = body
+        db.session.commit()
+        return redirect(url_for("show_post", post_id=target_post.id))

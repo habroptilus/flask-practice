@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<form class="" action={{"/edit_post/{}".format(target_post.id)}} method="post">
+    <label for="title">タイトル</label>
+    <br>
+    <input type="text" size="30" name="title" value={{target_post.title}}>
+    <br>
+    <label for="body">記事</label>
+    <br>
+    <textarea rows="10" cols="150" name="body">{{target_post.body}}</textarea>
+    <input type="submit" value="更新する">
+</form>
+{% endblock %}
