@@ -1,4 +1,2 @@
-from main import app
-import main.views
-
-app.run(debug=True)
+from main.views import application
+application.run(debug=True)

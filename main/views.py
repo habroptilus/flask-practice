@@ -8,7 +8,7 @@ def login_required(f):  # デコレーターを定義。fはデコレートさ�
     @wraps(f)
     def decorated_view(*args, **kwargs):
         if g.user is None:  # ログインしてなかったらログイン画面にリダイレクト
-            return redirect(url_for('login', next=request.path))
+            return redirect(url_for('user.login', next=request.path))
         return f(*args, **kwargs)
     return decorated_view
 
@@ -52,7 +52,7 @@ def add_user():
         user = User(username, email, password)
         db.session.add(user)
         db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('user.index'))
 
 
 @app.route("/user/<user_id>")
@@ -68,7 +68,7 @@ def del_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
     db.session.delete(target_user)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("user.index"))
 
 
 @app.route("/user/edit/<user_id>", methods=['GET', 'POST'])
@@ -85,7 +85,7 @@ def edit_user(user_id):
         target_user.email = email
         target_user.password = password
         db.session.commit()
-        return redirect(url_for("index"))
+        return redirect(url_for("user.index"))
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -96,7 +96,7 @@ def login():
         if authenticated:
             session['user_id'] = user.id
             flash('You were logged in')
-            return redirect(url_for('index'))
+            return redirect(url_for('user.index'))
         else:
             flash('Invalid email or password')
     return render_template('login.html')
@@ -106,7 +106,7 @@ def login():
 def logout():
     session.pop('user_id', None)
     flash('You were logged out')
-    return redirect(url_for('login'))
+    return redirect(url_for('user.login'))
 
 # Posts
 
@@ -146,7 +146,7 @@ def edit_post(post_id):
         target_post.title = title
         target_post.body = body
         db.session.commit()
-        return redirect(url_for("show_post", post_id=target_post.id))
+        return redirect(url_for("post.show_post", post_id=target_post.id))
 
 
 @app.route("/delete_post/<post_id>", methods=['POST'])
@@ -155,4 +155,4 @@ def del_post(post_id):
     user_id = User.query.get(target_post.user_id).id
     db.session.delete(target_post)
     db.session.commit()
-    return redirect(url_for("show_user", user_id=user_id))
+    return redirect(url_for("user.show_user", user_id=user_id))
