@@ -70,13 +70,10 @@ def login():
             session['user_id'] = user.id
             flash('You were logged in')
             return redirect(url_for('user.index'))
-        else:
-            flash('Invalid email or password')
     return render_template('login.html')
 
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    flash('You were logged out')
     return redirect(url_for('user.login'))

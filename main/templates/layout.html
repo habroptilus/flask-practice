@@ -10,6 +10,14 @@
             <a href="/index">home</a>
             <a href="/logout">logout</a>
             <a href="/test?msg=moti">test_page</a>
+            <div role="document" style="padding-top: 70px;">
+                {% with messages = get_flashed_messages() %}<!-- メッセージ種類によってフィルターもかけられる -->
+                    {% if messages %}
+                        {{messages[-1]}}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
         </header>
         {% block content %}
         <!-- ここにメインコンテンツを書く -->

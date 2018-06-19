@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, request, url_for, redirect, flash, session, g
+from flask import render_template, request, url_for, redirect, session, g
 from main.models import User, Post
 from main import db
 from functools import wraps
