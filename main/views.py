@@ -1,9 +1,29 @@
-from flask import render_template, request, url_for, redirect, flash, session
+from flask import render_template, request, url_for, redirect, flash, session, g
 from main.models import User
 from main import db, app
+from functools import wraps
+
+
+def login_required(f):  # デコレーターを定義。fはデコレートされるメソッド
+    @wraps(f)
+    def decorated_view(*args, **kwargs):
+        if g.user is None:  # ログインしてなかったらログイン画面にリダイレクト
+            return redirect(url_for('login', next=request.path))
+        return f(*args, **kwargs)
+    return decorated_view
+
+
+@app.before_request
+def load_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(session['user_id'])
 
 
 @app.route("/index")
+@login_required
 def index():
     user_list = User.query.all()
     return render_template('index.html', message="こんにちは", user_list=user_list)
@@ -35,6 +55,7 @@ def add_user():
 
 
 @app.route("/user/<user_id>")
+@login_required
 def show_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
     return render_template("show_user.html", target_user=target_user)
@@ -49,6 +70,7 @@ def del_user(user_id):
 
 
 @app.route("/user/edit/<user_id>", methods=['GET', 'POST'])
+@login_required
 def edit_user(user_id):
     target_user = User.query.get(user_id)  # primary keyでなら検索できる
     if request.method == 'GET':
