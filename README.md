@@ -11,6 +11,15 @@ init_db()
 `main/config.py`に書いてあるDBとテーブルを作成してくれる。
 SQliteを使っている。
 
+登録されたユーザーがいないとログインできなくなってしまうので、DBを作成すると同時に管理者ユーザーを作成するようにしている。
+管理者ユーザー情報は以下。
+
+```
+username : administrator
+email : admin@example.com
+password : admin
+```
+
 ## ライブラリ
 
 requirements.txtに必要なライブラリ一覧が記載されている。
