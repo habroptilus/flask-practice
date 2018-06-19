@@ -22,7 +22,7 @@
         <div class="user-info-footer">
             <a href={{"edit/{}".format(target_user.id)}}>変更する</a>
 
-            <form class="" action={{"/user/delete/{}".format(target_user.id)}} method="post">
+            <form class="" action={{"/user/delete/{}".format(target_user.id)}} method="post" onClick="return confirm('削除します。\nよろしいですか？');">
               <input type="submit" name="" value="ユーザーを削除する">
             </form>
         </div>
