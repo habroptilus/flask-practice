@@ -147,3 +147,12 @@ def edit_post(post_id):
         target_post.body = body
         db.session.commit()
         return redirect(url_for("show_post", post_id=target_post.id))
+
+
+@app.route("/delete_post/<post_id>", methods=['POST'])
+def del_post(post_id):
+    target_post = Post.query.get(post_id)  # primary keyでなら検索できる
+    user_id = User.query.get(target_post.user_id).id
+    db.session.delete(target_post)
+    db.session.commit()
+    return redirect(url_for("show_user", user_id=user_id))

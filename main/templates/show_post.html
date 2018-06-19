@@ -3,4 +3,7 @@
     <h2>{{post.title}}</h2>
     <p>{{post.body}}</p>
     <a href={{"/edit_post/{}".format(post.id)}}>投稿を編集する</a>
+    <form class="" action={{"/delete_post/{}".format(post.id)}} method="post">
+      <input type="submit" name="" value="投稿を削除する">
+    </form>
 {% endblock %}
