@@ -5,7 +5,7 @@
 terminalでpythonをインタラクティブモードで立ち上げて、以下を実行。
 
 ```bash:terminal
-from main.models import init
+from main.models import init_db
 init_db()
 ```
 `main/config.py`に書いてあるDBとテーブルを作成してくれる。
@@ -34,9 +34,15 @@ pip install -r requirements.txt
 * main
     * static(css,JS)
     * templates(html)
-    * __init.py__(app,dbの初期化)
+    * __init.py__(application,dbの初期化)
     * models.py(モデル)
     * views.py(ルーティング、コントローラ)
     * config.py(各自で作成)
 * manage.py(アプリ実行用スクリプト)
 * requirements.txt(ライブラリ一覧)
+
+内部の仕組みは次の通り。
+
+1. main.__init__.pyでapplicationとdbの初期化
+1. このapplicationをviews.__init__.pyで読んでルーティング
+1. ルーティングしたapplicationをmanage.pyで実行
