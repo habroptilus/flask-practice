@@ -9,6 +9,15 @@ from main.views.utils import login_required
 app = Blueprint("post", __name__)
 
 
+@app.before_request
+def load_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(session['user_id'])
+
+
 @app.route("/create_post/<user_id>", methods=['GET', 'POST'])
 @login_required
 def add_post(user_id):

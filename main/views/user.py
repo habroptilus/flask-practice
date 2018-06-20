@@ -8,6 +8,15 @@ from main.views.utils import login_required
 app = Blueprint("user", __name__, template_folder="templates")
 
 
+@app.before_request
+def load_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(session['user_id'])
+
+
 @app.route("/index")
 @login_required
 def index():
